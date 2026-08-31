@@ -1,0 +1,1330 @@
+/* 
+ * PramaanAI - National Forensic Document Verification & Biometric Screening Platform
+ * GIGW Compliant Government of India UI & Forensic Cyber Suite
+ * Based on Smart India Hackathon (SIH) Problem Statement 21688
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+
+:root {
+    /* Indian National Government Palette */
+    --gov-saffron: #ff9933;
+    --gov-saffron-dark: #e67e17;
+    --gov-white: #ffffff;
+    --gov-green: #138808;
+    --gov-green-dark: #0d6305;
+    --gov-navy: #000080;
+    --gov-navy-dark: #00005a;
+    --gov-ashoka-blue: #0b3c85;
+
+    /* Theme Tokens (Light Mode Default) */
+    --bg-primary: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-subtle: #f1f5f9;
+    --bg-glass: rgba(255, 255, 255, 0.92);
+    --border-color: #e2e8f0;
+    --border-focus: #0b3c85;
+    
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --text-subtle: #64748b;
+    --text-inverse: #ffffff;
+
+    --brand-primary: #0b3c85;
+    --brand-secondary: #ff9933;
+    --brand-accent: #138808;
+
+    /* Forensic Status Colors */
+    --status-genuine-bg: #ecfdf5;
+    --status-genuine-border: #10b981;
+    --status-genuine-text: #065f46;
+
+    --status-suspicious-bg: #fffbeb;
+    --status-suspicious-border: #f59e0b;
+    --status-suspicious-text: #92400e;
+
+    --status-fake-bg: #fef2f2;
+    --status-fake-border: #ef4444;
+    --status-fake-text: #991b1b;
+
+    --status-info-bg: #eff6ff;
+    --status-info-border: #3b82f6;
+    --status-info-text: #1e40af;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 20px rgba(11, 60, 133, 0.18);
+
+    --font-base: 'Inter', 'Noto Sans Devanagari', -apple-system, sans-serif;
+    --font-hindi: 'Noto Sans Devanagari', 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-crest: 'Cinzel', serif;
+}
+
+/* Dark Mode Theme */
+[data-theme="dark"] {
+    --bg-primary: #0a0f1d;
+    --bg-surface: #111827;
+    --bg-surface-subtle: #1f2937;
+    --bg-glass: rgba(17, 24, 39, 0.92);
+    --border-color: #374151;
+    --border-focus: #60a5fa;
+
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+    --text-subtle: #6b7280;
+
+    --status-genuine-bg: rgba(16, 185, 129, 0.12);
+    --status-genuine-border: #059669;
+    --status-genuine-text: #34d399;
+
+    --status-suspicious-bg: rgba(245, 158, 11, 0.12);
+    --status-suspicious-border: #d97706;
+    --status-suspicious-text: #fbbf24;
+
+    --status-fake-bg: rgba(239, 68, 68, 0.14);
+    --status-fake-border: #dc2626;
+    --status-fake-text: #f87171;
+
+    --status-info-bg: rgba(59, 130, 246, 0.12);
+    --status-info-border: #2563eb;
+    --status-info-text: #93c5fd;
+
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* High Contrast Accessibility Mode */
+[data-contrast="high"] {
+    --bg-primary: #000000 !important;
+    --bg-surface: #000000 !important;
+    --bg-surface-subtle: #111111 !important;
+    --border-color: #ffffff !important;
+    --text-main: #ffff00 !important; /* Yellow on Black for max GIGW visibility */
+    --text-muted: #ffffff !important;
+    --text-subtle: #e5e5e5 !important;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-base);
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   1. Government Top Bar & Accessibility Suite
+-------------------------------------------------------------------------- */
+.gov-top-bar {
+    background-color: #071329;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 4px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    z-index: 100;
+}
+
+.gov-top-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.gov-flag-icon {
+    height: 14px;
+    width: 22px;
+    border-radius: 2px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+.gov-top-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.access-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.access-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+}
+
+.lang-toggle-btn {
+    background: linear-gradient(135deg, var(--gov-saffron-dark), #b45309);
+    border: none;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.lang-toggle-btn:hover {
+    filter: brightness(1.1);
+}
+
+.ist-clock {
+    font-family: var(--font-mono);
+    color: #93c5fd;
+    font-size: 11px;
+}
+
+/* Tricolor Strip */
+.tricolor-ribbon {
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--gov-saffron) 0%, var(--gov-saffron) 33.3%, var(--gov-white) 33.3%, var(--gov-white) 66.6%, var(--gov-green) 66.6%, var(--gov-green) 100%);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* --------------------------------------------------------------------------
+   2. Main Header & National Emblems
+-------------------------------------------------------------------------- */
+.main-header {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    backdrop-filter: blur(10px);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.emblem-brand-group {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.national-emblem-svg {
+    height: 58px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.brand-text-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.gov-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9a3412;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.brand-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--brand-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-title span.ai-badge {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 1px;
+}
+
+.brand-tagline {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.header-right-badges {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+/* Ashok Chakra Animated Symbol */
+.ashok-chakra-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-surface-subtle);
+    padding: 6px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.ashok-chakra-svg {
+    width: 38px;
+    height: 38px;
+    animation: rotateChakra 28s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes rotateChakra {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.chakra-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chakra-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--gov-navy);
+}
+
+.chakra-sub {
+    font-size: 10px;
+    color: var(--text-subtle);
+}
+
+.sih-badge-pill {
+    background: linear-gradient(135deg, #1e3a8a, #0f172a);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sih-badge-pill span.sih-code {
+    color: #38bdf8;
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Hon'ble PM Narendra Modi Vision Hero Section
+-------------------------------------------------------------------------- */
+.hero-vision-section {
+    background: linear-gradient(135deg, #071329 0%, #0d234d 50%, #061c3b 100%);
+    color: #ffffff;
+    padding: 24px 24px 28px 24px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid var(--gov-saffron);
+}
+
+.hero-vision-section::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255, 153, 51, 0.12), transparent 40%),
+                radial-gradient(circle at 10% 80%, rgba(19, 136, 8, 0.12), transparent 40%);
+    pointer-events: none;
+}
+
+.hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 28px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 153, 51, 0.15);
+    border: 1px solid rgba(255, 153, 51, 0.4);
+    color: #ffba75;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hero-headline {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+}
+
+.hero-headline span.gradient-text {
+    background: linear-gradient(90deg, #ffba75, #ffffff, #86efac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    font-size: 13.5px;
+    color: #cbd5e1;
+    line-height: 1.55;
+}
+
+.pm-quote-box {
+    background: rgba(255, 255, 255, 0.07);
+    border-left: 3px solid var(--gov-saffron);
+    padding: 10px 14px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-style: italic;
+    font-size: 12.5px;
+    color: #e2e8f0;
+}
+
+.pm-card-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pm-profile-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    max-width: 380px;
+}
+
+.pm-photo-container {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid var(--gov-saffron);
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 0 14px rgba(255, 153, 51, 0.35);
+    background: #ffffff;
+}
+
+.pm-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.pm-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.pm-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.pm-title {
+    font-size: 11px;
+    color: #ffba75;
+    font-weight: 600;
+}
+
+.pm-tagline {
+    font-size: 10.5px;
+    color: #94a3b8;
+    margin-top: 4px;
+    line-height: 1.35;
+}
+
+/* --------------------------------------------------------------------------
+   4. Navigation Tabs Bar
+-------------------------------------------------------------------------- */
+.nav-tabs-wrapper {
+    background: var(--bg-surface);
+    border-bottom: 2px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 91px;
+    z-index: 80;
+}
+
+.nav-tabs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 16px;
+    gap: 4px;
+}
+
+.nav-tabs-container::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 12px 18px;
+    font-family: var(--font-base);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.nav-tab-btn:hover {
+    color: var(--brand-primary);
+    background: var(--bg-surface-subtle);
+}
+
+.nav-tab-btn.active {
+    color: var(--brand-primary);
+    border-bottom-color: var(--gov-saffron);
+    background: var(--bg-surface-subtle);
+    font-weight: 700;
+}
+
+.tab-icon {
+    font-size: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Main Content Area & Tab Pages
+-------------------------------------------------------------------------- */
+.main-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 16px 60px 16px;
+    flex: 1;
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   6. Tab 1: Single ID Screening Workspace
+-------------------------------------------------------------------------- */
+.screening-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .screening-layout {
+        grid-template-columns: 1fr;
+    }
+    .hero-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.specimen-presets-bar {
+    margin-bottom: 16px;
+    background: var(--bg-surface-subtle);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.preset-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.presets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+}
+
+.preset-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s ease;
+}
+
+.preset-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Upload Dropzone */
+.dropzone-box {
+    border: 2px dashed var(--border-color);
+    background: var(--bg-surface-subtle);
+    border-radius: var(--radius-md);
+    padding: 28px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.dropzone-box:hover, .dropzone-box.dragover {
+    border-color: var(--brand-primary);
+    background: rgba(11, 60, 133, 0.04);
+}
+
+.dropzone-icon {
+    font-size: 36px;
+    color: var(--brand-primary);
+    margin-bottom: 8px;
+}
+
+.dropzone-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.dropzone-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Reference Biometrics Upload & WebCam */
+.biometrics-dual-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.bio-input-card {
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    text-align: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--brand-primary), #1e3a8a);
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 2px 8px rgba(11, 60, 133, 0.3);
+}
+
+.btn-secondary {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-surface-subtle);
+    border-color: var(--text-muted);
+}
+
+/* Image Viewer & ELA Heatmap Overlay */
+.forensic-viewer-card {
+    position: relative;
+    background: #090d16;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.viewer-canvas-wrapper {
+    position: relative;
+    max-width: 100%;
+    max-height: 420px;
+}
+
+.viewer-base-img {
+    max-width: 100%;
+    max-height: 420px;
+    display: block;
+    border-radius: 4px;
+}
+
+.viewer-heatmap-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: 0.75;
+    mix-blend-mode: multiply;
+    transition: opacity 0.1s ease;
+}
+
+.viewer-bounding-boxes {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+
+.roi-bounding-box {
+    position: absolute;
+    border: 2px solid #ef4444;
+    background: rgba(239, 68, 68, 0.15);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    border-radius: 2px;
+    animation: pulseBox 2s infinite ease-in-out;
+}
+
+.roi-label {
+    position: absolute;
+    top: -20px;
+    left: -2px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+@keyframes pulseBox {
+    0%, 100% { border-color: #ef4444; }
+    50% { border-color: #f59e0b; }
+}
+
+/* Heatmap Controls Bar */
+.heatmap-controls-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--bg-surface-subtle);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    margin-top: 12px;
+    font-size: 12px;
+    flex-wrap: wrap;
+}
+
+.slider-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 180px;
+}
+
+.range-slider {
+    flex: 1;
+    accent-color: var(--brand-primary);
+    cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   7. Verdict Card & Trust Score Radial Gauge
+-------------------------------------------------------------------------- */
+.verdict-header-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--bg-surface-subtle);
+    padding: 18px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.gauge-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
+
+.gauge-svg {
+    transform: rotate(-90deg);
+}
+
+.gauge-bg-circle {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 8;
+}
+
+.gauge-fill-circle {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s ease;
+}
+
+.gauge-score-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.gauge-score-number {
+    font-size: 24px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    line-height: 1;
+}
+
+.gauge-score-label {
+    font-size: 9px;
+    color: var(--text-subtle);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.verdict-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.verdict-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    width: fit-content;
+    border: 2px solid;
+}
+
+.badge-genuine {
+    background: var(--status-genuine-bg);
+    border-color: var(--status-genuine-border);
+    color: var(--status-genuine-text);
+}
+
+.badge-suspicious {
+    background: var(--status-suspicious-bg);
+    border-color: var(--status-suspicious-border);
+    color: var(--status-suspicious-text);
+}
+
+.badge-fake {
+    background: var(--status-fake-bg);
+    border-color: var(--status-fake-border);
+    color: var(--status-fake-text);
+}
+
+.verdict-reason {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.advisory-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--status-suspicious-bg);
+    border: 1px solid var(--status-suspicious-border);
+    color: var(--status-suspicious-text);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Signal Breakdown & Metadata Panels
+-------------------------------------------------------------------------- */
+.signals-card {
+    margin-bottom: 20px;
+}
+
+.signal-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.signal-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.signal-progress-track {
+    height: 8px;
+    background: var(--bg-surface-subtle);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.signal-progress-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.6s ease;
+}
+
+.fill-green { background: #10b981; }
+.fill-yellow { background: #f59e0b; }
+.fill-red { background: #ef4444; }
+.fill-blue { background: #3b82f6; }
+
+.signal-subnote {
+    font-size: 11px;
+    color: var(--text-subtle);
+}
+
+/* Extracted Metadata Table */
+.metadata-table-wrapper {
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.meta-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+}
+
+.meta-table th, .meta-table td {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.meta-table th {
+    background: var(--bg-surface-subtle);
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.badge-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+}
+
+.badge-valid { background: #ecfdf5; color: #065f46; border: 1px solid #10b981; }
+.badge-invalid { background: #fef2f2; color: #991b1b; border: 1px solid #ef4444; }
+
+/* --------------------------------------------------------------------------
+   9. Tab 2: Multi-Document Cross Verification Matrix
+-------------------------------------------------------------------------- */
+.cross-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.doc-slot-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 14px;
+}
+
+.matrix-table th, .matrix-table td {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.matrix-table th {
+    background: var(--bg-surface-subtle);
+}
+
+/* --------------------------------------------------------------------------
+   10. Tab 3: DigiLocker Direct Connect Portal
+-------------------------------------------------------------------------- */
+.digilocker-portal-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .digilocker-portal-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.digilocker-login-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.form-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.form-input {
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-color);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-main);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.form-input:focus {
+    border-color: var(--brand-primary);
+}
+
+/* --------------------------------------------------------------------------
+   11. Tab 4: Authenticity & Forensic Factors Rulebook
+-------------------------------------------------------------------------- */
+.factors-accordion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+}
+
+.factor-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.factor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.factor-icon-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.factor-badge-icon {
+    font-size: 24px;
+}
+
+.factor-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--brand-primary);
+}
+
+.factor-body {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   12. Tab 6: Immutable Audit Trail Ledger
+-------------------------------------------------------------------------- */
+.audit-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.audit-table th, .audit-table td {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.audit-table th {
+    background: var(--bg-surface-subtle);
+    font-weight: 700;
+}
+
+.hash-pill {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    background: var(--bg-surface-subtle);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    word-break: break-all;
+}
+
+/* --------------------------------------------------------------------------
+   13. Official Footer
+-------------------------------------------------------------------------- */
+.gov-footer {
+    background: #071329;
+    color: #94a3b8;
+    padding: 36px 24px 20px 24px;
+    border-top: 3px solid var(--gov-saffron);
+    font-size: 12px;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    margin-bottom: 24px;
+}
+
+.footer-col-title {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 6px;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.footer-links a:hover {
+    color: #ffba75;
+}
+
+.footer-bottom-bar {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 11px;
+}
+
+/* --------------------------------------------------------------------------
+   14. WebCam Modal
+-------------------------------------------------------------------------- */
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px;
+}
+
+.modal-backdrop.active {
+    display: flex;
+}
+
+.modal-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    max-width: 520px;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.2s ease-out;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.webcam-video-feed {
+    width: 100%;
+    height: 320px;
+    background: #000;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    transform: scaleX(-1); /* Mirror for natural webcam experience */
+}

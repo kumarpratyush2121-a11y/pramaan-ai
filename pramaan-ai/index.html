@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-contrast="normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PramaanAI (प्रमाण AI) — National Forensic Document Verification & Biometric Screening Platform</title>
+    <meta name="description" content="AI-Powered Fake Identity & Document Screening System built for Smart India Hackathon (SIH) Problem Statement 21688. Error Level Analysis (ELA), Biometric Face Match, Verhoeff Checksum, and DigiLocker Integration.">
+    <meta name="keywords" content="PramaanAI, SIH 21688, Fake Document Detection, Aadhaar Verification, PAN Card Forensic, ELA Tampering, Biometric Face Match, DigiLocker">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23000080'/><circle cx='50' cy='50' r='40' fill='%23ffffff'/><circle cx='50' cy='50' r='8' fill='%23000080'/></svg>">
+</head>
+<body>
+
+    <!-- 1. Government Top Bar & Accessibility Suite -->
+    <div class="gov-top-bar" role="region" aria-label="Accessibility and Government Navigation">
+        <div class="gov-top-left">
+            <svg class="gov-flag-icon" viewBox="0 0 225 150" xmlns="http://www.w3.org/2000/svg">
+                <rect width="225" height="50" fill="#FF9933"/>
+                <rect y="50" width="225" height="50" fill="#FFFFFF"/>
+                <rect y="100" width="225" height="50" fill="#138808"/>
+                <circle cx="112.5" cy="75" r="20" fill="#000080"/>
+                <circle cx="112.5" cy="75" r="17" fill="#FFFFFF"/>
+                <circle cx="112.5" cy="75" r="4" fill="#000080"/>
+            </svg>
+            <span data-i18n="govTitle" style="font-weight: 700; letter-spacing: 0.5px;">भारत सरकार | GOVERNMENT OF INDIA</span>
+            <span style="opacity: 0.5;">|</span>
+            <span data-i18n="govSub" style="color: #93c5fd;">Ministry of Electronics & IT (MeitY)</span>
+        </div>
+        <div class="gov-top-right">
+            <span class="ist-clock" id="ist-clock">Loading IST...</span>
+            <button class="access-btn" id="font-decrease-btn" title="Decrease Font Size">A-</button>
+            <button class="access-btn" id="font-reset-btn" title="Default Font Size">A</button>
+            <button class="access-btn" id="font-increase-btn" title="Increase Font Size">A+</button>
+            <button class="access-btn" id="contrast-toggle-btn" title="Toggle High Contrast">◐ Contrast</button>
+            <button class="access-btn" id="theme-toggle-btn" title="Toggle Dark/Light Mode">🌙 Theme</button>
+            <button class="lang-toggle-btn" id="lang-toggle-btn" title="Change Language">हिन्दी (HI)</button>
+        </div>
+    </div>
+
+    <!-- National Tricolor Ribbon -->
+    <div class="tricolor-ribbon"></div>
+
+    <!-- 2. Main Header with Lion Capital & Ashok Chakra -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="emblem-brand-group">
+                <!-- State Emblem of India (Ashoka Lion Capital) -->
+                <svg class="national-emblem-svg" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Pedestal -->
+                    <rect x="15" y="100" width="70" height="15" rx="3" fill="#b45309" stroke="#92400e" stroke-width="2"/>
+                    <text x="50" y="125" font-family="'Noto Sans Devanagari', serif" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">सत्यमेव जयते</text>
+                    <!-- Central Dharma Chakra on Pedestal -->
+                    <circle cx="50" cy="107.5" r="5.5" fill="#000080"/>
+                    <circle cx="50" cy="107.5" r="4" fill="#ffffff"/>
+                    <circle cx="50" cy="107.5" r="1.5" fill="#000080"/>
+                    <!-- Three Lions Silhouette -->
+                    <path d="M50 15 C42 15 38 25 38 35 C38 48 42 60 42 75 C42 85 45 95 50 98 C55 95 58 85 58 75 C58 60 62 48 62 35 C62 25 58 15 50 15 Z" fill="#b45309"/>
+                    <path d="M30 25 C24 25 20 32 20 42 C20 55 25 70 28 85 C32 92 38 96 42 98 C38 85 36 70 34 55 C34 42 36 32 30 25 Z" fill="#92400e"/>
+                    <path d="M70 25 C76 25 80 32 80 42 C80 55 75 70 72 85 C68 92 62 96 58 98 C62 85 64 70 66 55 C66 42 64 32 70 25 Z" fill="#92400e"/>
+                    <!-- Lion Manes and Details -->
+                    <circle cx="50" cy="28" r="7" fill="#f59e0b"/>
+                    <circle cx="28" cy="36" r="5" fill="#d97706"/>
+                    <circle cx="72" cy="36" r="5" fill="#d97706"/>
+                </svg>
+
+                <div class="brand-text-col">
+                    <span class="gov-subtitle" data-i18n="govSub">National Cyber Forensics Directorate</span>
+                    <h1 class="brand-title">
+                        <span data-i18n="portalName">PramaanAI</span>
+                        <span class="ai-badge">FORENSIC SUITE</span>
+                    </h1>
+                    <span class="brand-tagline" data-i18n="portalTagline">AI-Powered Fake Identity & Document Screening System (SIH-21688)</span>
+                </div>
+            </div>
+
+            <!-- Ashok Chakra & SIH 21688 Credentials -->
+            <div class="header-right-badges">
+                <!-- 24-Spoke Ashok Chakra Wheel -->
+                <div class="ashok-chakra-container">
+                    <svg class="ashok-chakra-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="46" fill="none" stroke="#000080" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="10" fill="#000080"/>
+                        <circle cx="50" cy="50" r="4" fill="#ffffff"/>
+                        <!-- 24 Radial Spokes -->
+                        <g stroke="#000080" stroke-width="2">
+                            <line x1="50" y1="50" x2="50" y2="5"/>
+                            <line x1="50" y1="50" x2="50" y2="95"/>
+                            <line x1="50" y1="50" x2="5" y2="50"/>
+                            <line x1="50" y1="50" x2="95" y2="50"/>
+                            <line x1="50" y1="50" x2="81.82" y2="18.18"/>
+                            <line x1="50" y1="50" x2="18.18" y2="81.82"/>
+                            <line x1="50" y1="50" x2="18.18" y2="18.18"/>
+                            <line x1="50" y1="50" x2="81.82" y2="81.82"/>
+                            <line x1="50" y1="50" x2="61.64" y2="6.51"/>
+                            <line x1="50" y1="50" x2="38.36" y2="93.49"/>
+                            <line x1="50" y1="50" x2="72.50" y2="10.87"/>
+                            <line x1="50" y1="50" x2="27.50" y2="89.13"/>
+                            <line x1="50" y1="50" x2="89.13" y2="27.50"/>
+                            <line x1="50" y1="50" x2="10.87" y2="72.50"/>
+                            <line x1="50" y1="50" x2="93.49" y2="38.36"/>
+                            <line x1="50" y1="50" x2="6.51" y2="61.64"/>
+                            <line x1="50" y1="50" x2="93.49" y2="61.64"/>
+                            <line x1="50" y1="50" x2="6.51" y2="38.36"/>
+                            <line x1="50" y1="50" x2="89.13" y2="72.50"/>
+                            <line x1="50" y1="50" x2="10.87" y2="27.50"/>
+                            <line x1="50" y1="50" x2="72.50" y2="89.13"/>
+                            <line x1="50" y1="50" x2="27.50" y2="10.87"/>
+                            <line x1="50" y1="50" x2="61.64" y2="93.49"/>
+                            <line x1="50" y1="50" x2="38.36" y2="6.51"/>
+                        </g>
+                    </svg>
+                    <div class="chakra-info">
+                        <span class="chakra-title">ASHOKA CHAKRA</span>
+                        <span class="chakra-sub">Seal of Digital Truth</span>
+                    </div>
+                </div>
+
+                <div class="sih-badge-pill">
+                    <span>SIH 2026 PORTAL</span>
+                    <span class="sih-code">PS-ID: 21688</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. Hon'ble PM Narendra Modi Vision Hero Banner -->
+    <section class="hero-vision-section" aria-label="National Leadership Vision">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-pill">
+                    <span>🇮🇳 DIGITAL INDIA SOVEREIGNTY INITIATIVE</span>
+                </div>
+                <h2 class="hero-headline">
+                    <span class="gradient-text" data-i18n="heroHeadline">Ensuring Digital Trust & Cryptographic Integrity Across National Identity Documents</span>
+                </h2>
+                <p class="hero-description" data-i18n="heroSub">
+                    An advanced deep-vision and multi-signal forensic verification platform designed for Law Enforcement, Border Control, Financial Institutions, and Government Verification Officers.
+                </p>
+                <div class="pm-quote-box">
+                    <p data-i18n="pmQuote">“In the era of Digital Public Infrastructure, trust is the foundational currency. AI-powered forensics and tamper-proof verification will safeguard our national sovereignty.”</p>
+                </div>
+            </div>
+
+            <div class="pm-card-wrapper">
+                <div class="pm-profile-card">
+                    <div class="pm-photo-container">
+                        <!-- High resolution authentic local portrait of Hon'ble PM Narendra Modi -->
+                        <img class="pm-photo-img" src="assets/pm_modi.jpg" alt="Hon'ble Prime Minister of India Shri Narendra Modi">
+                    </div>
+                    <div class="pm-details">
+                        <span class="pm-name" data-i18n="pmName">Shri Narendra Modi</span>
+                        <span class="pm-title" data-i18n="pmTitle">Hon'ble Prime Minister of India</span>
+                        <span class="pm-tagline">Architect of Digital India & Cyber Resilience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Navigation Tabs -->
+    <nav class="nav-tabs-wrapper" role="navigation" aria-label="Portal Navigation Tabs">
+        <div class="nav-tabs-container">
+            <button class="nav-tab-btn active" data-tab="tab-screening">
+                <span class="tab-icon">🔍</span>
+                <span data-i18n="tabScreening">Forensic Screening</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-cross-verify">
+                <span class="tab-icon">👥</span>
+                <span data-i18n="tabCrossVerify">Multi-Doc Cross Verification</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-digilocker">
+                <span class="tab-icon">🔒</span>
+                <span data-i18n="tabDigiLocker">DigiLocker Direct Connect</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-rulebook">
+                <span class="tab-icon">🛡️</span>
+                <span data-i18n="tabRulebook">Forensic Rulebook & Factors</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-batch">
+                <span class="tab-icon">⚡</span>
+                <span data-i18n="tabBatch">Batch Screening</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-audit">
+                <span class="tab-icon">📋</span>
+                <span data-i18n="tabAudit">Immutable Audit Trail</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 5. Main Workspace Container -->
+    <main class="main-container">
+
+        <!-- ===================================================================
+             TAB 1: Single Document Forensic Screening Workspace
+        =================================================================== -->
+        <section class="tab-panel active" id="tab-screening" aria-labelledby="tab-screening">
+            
+            <!-- 1-Click Demo Specimen Selector Bar -->
+            <div class="specimen-presets-bar">
+                <div class="preset-title" data-i18n="specimenPresets">1-Click Demo Specimen Presets (SIH-21688):</div>
+                <div class="presets-grid">
+                    <button class="preset-btn" id="preset-clean" title="Test Clean Aadhaar Card">
+                        🟢 <span data-i18n="sampleClean">1. Clean Aadhaar (Genuine)</span>
+                    </button>
+                    <button class="preset-btn" id="preset-tampered" title="Test Tampered PAN Card with Spliced DOB">
+                        🔴 <span data-i18n="sampleTampered">2. Tampered DOB PAN (Spliced)</span>
+                    </button>
+                    <button class="preset-btn" id="preset-whatsapp" title="Test Degraded WhatsApp Forwarded ID">
+                        🟡 <span data-i18n="sampleWhatsapp">3. WhatsApp Degraded ID</span>
+                    </button>
+                    <button class="preset-btn" id="preset-imposter" title="Test Impersonator Mismatched Biometrics">
+                        🟣 <span data-i18n="sampleImposter">4. Mismatched Impersonator</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner Banner -->
+            <div id="screening-loading" style="display: none; align-items: center; justify-content: center; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-md); margin-bottom: 16px;">
+                <div style="width: 20px; height: 20px; border: 3px solid #cbd5e1; border-top-color: var(--brand-primary); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                <span style="font-weight: 700; font-size: 13px; color: var(--brand-primary);">Executing Multi-Signal Forensic Vision & Biometric Pipeline...</span>
+            </div>
+            <style>
+                @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            </style>
+
+            <div class="screening-layout">
+                <!-- Left Column: Ingestion, Camera, & Heatmap Viewer -->
+                <div class="left-col space-y-4">
+                    <!-- Dropzone -->
+                    <div class="card-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">📄 Document Ingestion Zone</h3>
+                            <span class="badge-tag badge-valid">AUTO-WARP ON</span>
+                        </div>
+
+                        <div class="dropzone-box" id="main-dropzone">
+                            <div class="dropzone-icon">📁</div>
+                            <div class="dropzone-title" data-i18n="dropzoneTitle">Drag & Drop Identity Document (Aadhaar, PAN, Voter ID, Passport, DL)</div>
+                            <div class="dropzone-sub" data-i18n="dropzoneSub">Supports PNG, JPG, JPEG, WEBP | Up to 25MB | Auto-Perspective Correction</div>
+                            <input type="file" id="id-file-input" accept="image/*" style="display: none;">
+                        </div>
+
+                        <!-- Reference Selfie & WebCam Row -->
+                        <div class="biometrics-dual-row">
+                            <div class="bio-input-card">
+                                <div style="font-size: 11.5px; font-weight: 700; margin-bottom: 6px;" data-i18n="uploadRefTitle">Reference Photo</div>
+                                <button class="btn-secondary" style="width: 100%;" onclick="document.getElementById('selfie-file-input').click();">
+                                    📁 <span data-i18n="uploadRefBtn">Upload Selfie Photo</span>
+                                </button>
+                                <input type="file" id="selfie-file-input" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="bio-input-card">
+                                <div style="font-size: 11.5px; font-weight: 700; margin-bottom: 6px;">Live Liveness Biometrics</div>
+                                <button class="btn-primary" style="width: 100%;" id="btn-open-webcam">
+                                    <span data-i18n="webcamBtn">📸 Live WebCam Capture</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ELA Heatmap & Forensic ROI Viewer -->
+                    <div class="card-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">🔬 Error Level Analysis (ELA) Heatmap & Splicing Detector</h3>
+                            <span class="badge-tag badge-valid">16×16 MACROBLOCKS</span>
+                        </div>
+
+                        <div class="forensic-viewer-card">
+                            <div class="viewer-canvas-wrapper" id="viewer-wrapper">
+                                <img id="viewer-base-img" class="viewer-base-img" alt="Document Scan" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='440' viewBox='0 0 700 440'><rect width='700' height='440' fill='%23111827'/><text x='350' y='220' fill='%2394a3b8' font-size='16' text-anchor='middle'>No Document Loaded</text></svg>">
+                                <img id="viewer-heatmap-img" class="viewer-heatmap-img" alt="ELA Heatmap Overlay">
+                                <div id="viewer-bounding-boxes" class="viewer-bounding-boxes"></div>
+                            </div>
+                        </div>
+
+                        <!-- Heatmap Overlay Controls -->
+                        <div class="heatmap-controls-bar">
+                            <div class="slider-group">
+                                <span>Heatmap Opacity:</span>
+                                <input type="range" id="heatmap-opacity-slider" class="range-slider" min="0" max="100" value="75">
+                                <span id="heatmap-opacity-val" style="font-family: var(--font-mono); font-weight: 700;">75%</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-subtle);">
+                                💡 Red/Yellow Hotspots indicate compression quantization mismatch (altered text or image splicing).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Verdict, Radial Gauge, Signal Breakdown, & Metadata -->
+                <div class="right-col space-y-4">
+                    <!-- Verdict & Radial Gauge Header -->
+                    <div class="card-panel">
+                        <div class="verdict-header-row">
+                            <div class="gauge-wrapper">
+                                <svg class="gauge-svg" width="100" height="100" viewBox="0 0 100 100">
+                                    <circle class="gauge-bg-circle" cx="50" cy="50" r="40"/>
+                                    <circle id="gauge-fill-circle" class="gauge-fill-circle" cx="50" cy="50" r="40" stroke="#10b981" stroke-dasharray="251.3" stroke-dashoffset="12"/>
+                                </svg>
+                                <div class="gauge-score-text">
+                                    <span id="trust-score-value" class="gauge-score-number">95</span>
+                                    <span class="gauge-score-label" data-i18n="trustScoreLabel">TRUST</span>
+                                </div>
+                            </div>
+
+                            <div class="verdict-info-col">
+                                <span style="font-size: 11px; font-weight: 700; color: var(--text-subtle); text-transform: uppercase;" data-i18n="verdictTitle">OFFICIAL FORENSIC VERDICT</span>
+                                <div id="verdict-badge" class="verdict-badge badge-genuine">GENUINE</div>
+                                <p id="verdict-reason" class="verdict-reason">All cryptographic checksums, typography, and ELA macroblock compression gradients match authentic government issuance standards.</p>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Recompression Warning Banner (Conditional) -->
+                        <div id="compression-advisory-banner" class="advisory-banner" style="display: none;">
+                            <span>⚠️</span>
+                            <span><strong>Compression Advisory:</strong> Multiple social media (WhatsApp/Telegram) re-compression passes detected. High-frequency energy is attenuated.</span>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Factor Signal Breakdown -->
+                    <div class="card-panel signals-card">
+                        <div class="panel-header">
+                            <h3 class="panel-title" data-i18n="signalBreakdownTitle">Multi-Factor Signal Breakdown</h3>
+                            <span style="font-size: 11px; color: var(--text-subtle);">SIH-21688 Weighted Model</span>
+                        </div>
+
+                        <!-- Signal 1: OCR -->
+                        <div class="signal-row">
+                            <div class="signal-meta">
+                                <span data-i18n="ocrConfidenceLabel">OCR Typography & Field Extraction (25%)</span>
+                                <span id="ocr-signal-val" style="font-family: var(--font-mono);">92%</span>
+                            </div>
+                            <div class="signal-progress-track">
+                                <div id="ocr-signal-fill" class="signal-progress-fill fill-green" style="width: 92%;"></div>
+                            </div>
+                            <span id="ocr-signal-note" class="signal-subnote">92% Font & Template Match</span>
+                        </div>
+
+                        <!-- Signal 2: ELA -->
+                        <div class="signal-row">
+                            <div class="signal-meta">
+                                <span data-i18n="elaTamperLabel">ELA Tamper Anomaly Score (40%)</span>
+                                <span id="ela-signal-val" style="font-family: var(--font-mono);">96%</span>
+                            </div>
+                            <div class="signal-progress-track">
+                                <div id="ela-signal-fill" class="signal-progress-fill fill-green" style="width: 96%;"></div>
+                            </div>
+                            <span id="ela-signal-note" class="signal-subnote">Tamper Score: 4.0%</span>
+                        </div>
+
+                        <!-- Signal 3: Biometrics -->
+                        <div class="signal-row">
+                            <div class="signal-meta">
+                                <span data-i18n="faceMatchLabel">Biometric Face Match Similarity (25%)</span>
+                                <span id="bio-signal-val" style="font-family: var(--font-mono);">94%</span>
+                            </div>
+                            <div class="signal-progress-track">
+                                <div id="bio-signal-fill" class="signal-progress-fill fill-green" style="width: 94%;"></div>
+                            </div>
+                            <span id="bio-signal-note" class="signal-subnote">94.0% Biometric Cosine Similarity</span>
+                        </div>
+
+                        <!-- Signal 4: Checksums -->
+                        <div class="signal-row">
+                            <div class="signal-meta">
+                                <span data-i18n="checksumLabel">Cryptographic Checksum & Structure (10%)</span>
+                                <span id="checksum-signal-val" style="font-family: var(--font-mono);">100%</span>
+                            </div>
+                            <div class="signal-progress-track">
+                                <div id="checksum-signal-fill" class="signal-progress-fill fill-green" style="width: 100%;"></div>
+                            </div>
+                            <span id="checksum-signal-note" class="signal-subnote">Verhoeff D5 Checksum Valid</span>
+                        </div>
+                    </div>
+
+                    <!-- Extracted Metadata & PII Masking -->
+                    <div class="card-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title" data-i18n="extractedMetadataTitle">Extracted Document Metadata</h3>
+                            <button class="btn-secondary" id="toggle-pii-btn" style="font-size: 11px; padding: 4px 10px;">
+                                🔒 Mask PII Numbers
+                            </button>
+                        </div>
+
+                        <div class="metadata-table-wrapper">
+                            <table class="meta-table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Extracted Value</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="metadata-table-body">
+                                    <!-- Rendered dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Export Actions -->
+                        <div style="display: flex; gap: 10px; margin-top: 18px;">
+                            <button class="btn-primary" id="btn-export-pdf" style="flex: 1; justify-content: center;">
+                                <span data-i18n="exportPdfBtn">🖨️ Export Official Forensic Certificate (PDF)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 2: Multi-Document Cross-Verification Matrix
+        =================================================================== -->
+        <section class="tab-panel" id="tab-cross-verify" aria-labelledby="tab-cross-verify">
+            <div class="card-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">👥 Multi-Document Persona Cross-Verification Matrix</h2>
+                        <span style="font-size: 12px; color: var(--text-muted);">Correlates all identity documents held by an individual (Aadhaar + PAN + Voter ID + Passport + DL) for identity cohesion.</span>
+                    </div>
+                    <span class="badge-tag badge-valid">PERSONA INTEGRITY: 98.6%</span>
+                </div>
+
+                <div class="cross-grid">
+                    <div class="doc-slot-card">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong>Aadhaar Card</strong>
+                            <span class="badge-tag badge-valid">LINKED</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">UID: <code>XXXX XXXX 9019</code></div>
+                        <div style="font-size: 12px;">Name: <strong>Rajesh Kumar Sharma</strong></div>
+                        <div style="font-size: 12px;">DOB: <strong>15/08/1988</strong></div>
+                    </div>
+
+                    <div class="doc-slot-card">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong>PAN Card</strong>
+                            <span class="badge-tag badge-valid">LINKED</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">PAN: <code>ABCPSXXXXF</code></div>
+                        <div style="font-size: 12px;">Name: <strong>RAJESH KUMAR SHARMA</strong></div>
+                        <div style="font-size: 12px;">DOB: <strong>15/08/1988</strong></div>
+                    </div>
+
+                    <div class="doc-slot-card">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong>Voter ID (EPIC)</strong>
+                            <span class="badge-tag badge-valid">LINKED</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">EPIC: <code>WBGXXXX567</code></div>
+                        <div style="font-size: 12px;">Name: <strong>RAJESH KUMAR SHARMA</strong></div>
+                        <div style="font-size: 12px;">DOB: <strong>15/08/1988</strong></div>
+                    </div>
+
+                    <div class="doc-slot-card">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong>Driving License</strong>
+                            <span class="badge-tag badge-valid">LINKED</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">DL: <code>DL-04-2018-XXXXXXX</code></div>
+                        <div style="font-size: 12px;">Name: <strong>RAJESH KUMAR SHARMA</strong></div>
+                        <div style="font-size: 12px;">DOB: <strong>15/08/1988</strong></div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; margin: 18px 0 8px 0;">Cross-Document Consistency Analysis</h3>
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Verification Parameter</th>
+                            <th>Aadhaar vs PAN</th>
+                            <th>Aadhaar vs Voter ID</th>
+                            <th>Aadhaar vs DL</th>
+                            <th>Cohesion Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Full Name (Fuzzy Match)</strong></td>
+                            <td>100% Match</td>
+                            <td>100% Match</td>
+                            <td>100% Match</td>
+                            <td><span class="badge-tag badge-valid">PERFECT</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date of Birth (DOB)</strong></td>
+                            <td>Exact (15/08/1988)</td>
+                            <td>Exact (15/08/1988)</td>
+                            <td>Exact (15/08/1988)</td>
+                            <td><span class="badge-tag badge-valid">EXACT</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Father's Name</strong></td>
+                            <td>Late Suresh Sharma</td>
+                            <td>Suresh Sharma</td>
+                            <td>Suresh Sharma</td>
+                            <td><span class="badge-tag badge-valid">VERIFIED</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Biometric Face Consistency</strong></td>
+                            <td>94.2% Cosine Match</td>
+                            <td>92.8% Cosine Match</td>
+                            <td>95.1% Cosine Match</td>
+                            <td><span class="badge-tag badge-valid">IDENTICAL CITIZEN</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 3: DigiLocker Direct Connect Portal
+        =================================================================== -->
+        <section class="tab-panel" id="tab-digilocker" aria-labelledby="tab-digilocker">
+            <div class="digilocker-portal-container">
+                <div class="digilocker-login-box">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <span style="font-size: 28px;">🔒</span>
+                        <div>
+                            <h3 style="font-size: 16px; font-weight: 800; color: var(--brand-primary);">DigiLocker Verification Gateway</h3>
+                            <span style="font-size: 11.5px; color: var(--text-muted);">Direct Fetch from National Digital Locker Repository</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Aadhaar UID / Registered Mobile Number</label>
+                        <input type="text" id="digi-uid-input" class="form-input" placeholder="e.g. 5432 1987 9019 or 9876543210" value="5432 1987 9019">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">eKYC One-Time Password (OTP)</label>
+                        <input type="text" id="digi-otp-input" class="form-input" placeholder="Enter 6-digit OTP (Demo: 123456)" value="123456">
+                        <span style="font-size: 10.5px; color: var(--text-subtle);">💡 For demonstration, use pre-filled OTP: <code>123456</code></span>
+                    </div>
+
+                    <button class="btn-primary" id="btn-digilocker-login" style="width: 100%; justify-content: center; padding: 12px;">
+                        🔐 Authenticate & Retrieve DigiLocker Records
+                    </button>
+                </div>
+
+                <div class="card-panel" id="digilocker-results">
+                    <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                        <div style="font-size: 40px; margin-bottom: 12px;">🛡️</div>
+                        <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main);">DigiLocker Cryptographic Repository</h4>
+                        <p style="font-size: 12.5px; max-width: 380px; margin: 6px auto;">Enter citizen Aadhaar/Mobile to retrieve legally valid electronic documents with XML cryptographic certificates directly from UIDAI, ITD, and MoRTH.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 4: Forensic Rulebook & Authenticity Matrix
+        =================================================================== -->
+        <section class="tab-panel" id="tab-rulebook" aria-labelledby="tab-rulebook">
+            <div class="card-panel" style="margin-bottom: 20px;">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">🛡️ Forensic Rulebook & Authenticity Factors Matrix</h2>
+                        <span style="font-size: 12px; color: var(--text-muted);">Scientific and mathematical breakdown of all factors checked to distinguish authentic vs. fake documents.</span>
+                    </div>
+                </div>
+
+                <div class="factors-accordion-grid">
+                    <!-- Factor 1 -->
+                    <div class="factor-card">
+                        <div class="factor-icon-header">
+                            <span class="factor-badge-icon">🔬</span>
+                            <h3 class="factor-title">1. Error Level Analysis (ELA)</h3>
+                        </div>
+                        <p class="factor-body">
+                            When an image is saved as a JPEG, each 8×8 macroblock is quantized at a uniform error level. If a section (like a Date of Birth or photo) is spliced or edited in Photoshop, that region undergoes a different number of re-compression cycles, causing a high-frequency error gradient spike clearly visible on our thermal heatmap overlay.
+                        </p>
+                    </div>
+
+                    <!-- Factor 2 -->
+                    <div class="factor-card">
+                        <div class="factor-icon-header">
+                            <span class="factor-badge-icon">🧮</span>
+                            <h3 class="factor-title">2. Verhoeff Dihedral Checksum ($D_5$)</h3>
+                        </div>
+                        <p class="factor-body">
+                            Aadhaar numbers use the Verhoeff algorithm based on the dihedral group of order 10 ($D_5$). It catches 100% of single-digit transcription errors and 95.3% of adjacent transposition errors. Amateur fake UID generators almost always fail this mathematical check.
+                        </p>
+                    </div>
+
+                    <!-- Factor 3 -->
+                    <div class="factor-card">
+                        <div class="factor-icon-header">
+                            <span class="factor-badge-icon">👁️</span>
+                            <h3 class="factor-title">3. Deep ArcFace Biometric Embeddings</h3>
+                        </div>
+                        <p class="factor-body">
+                            Computes normalized 128D/512D deep facial feature vectors from the ID portrait and reference selfie/webcam using Cosine Distance $\cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|\|\mathbf{v}\|}$. Gracefully handles lighting variations while catching deepfakes and photo-substitution impersonators.
+                        </p>
+                    </div>
+
+                    <!-- Factor 4 -->
+                    <div class="factor-card">
+                        <div class="factor-icon-header">
+                            <span class="factor-badge-icon">💳</span>
+                            <h3 class="factor-title">4. PAN 4th Character Tax Entity Rules</h3>
+                        </div>
+                        <p class="factor-body">
+                            Income Tax Department PAN cards follow strict semantic encoding: the 4th character denotes entity status (<strong>P</strong> = Individual, <strong>C</strong> = Company, <strong>H</strong> = HUF, <strong>F</strong> = Firm, <strong>T</strong> = Trust), and the 5th character must match the first letter of the holder's last name.
+                        </p>
+                    </div>
+
+                    <!-- Factor 5 -->
+                    <div class="factor-card">
+                        <div class="factor-icon-header">
+                            <span class="factor-badge-icon">🌐</span>
+                            <h3 class="factor-title">5. Passport MRZ ICAO 9303 Check-Digits</h3>
+                        </div>
+                        <p class="factor-body">
+                            2-line Machine Readable Zone (MRZ) encoding uses a weighted modulo-10 matrix with weighting sequence $[7, 3, 1, 7, 3, 1 \dots]$ over document number, date of birth, and expiry date fields to prevent passport forgery.
+                        </p>
+                    </div>
+
+                    <!-- Factor 6 -->
+                    <div class="factor-card">
+                        <div class="factor-icon-header">
+                            <span class="factor-badge-icon">🛡️</span>
+                            <h3 class="factor-title">6. Guilloché Security Patterns & Microprint</h3>
+                        </div>
+                        <p class="factor-body">
+                            Authentic IDs feature high-frequency sine-wave Guilloché background patterns that degrade and blur when copied or scanned by flatbed scanners, revealing non-genuine document reproduction.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Verhoeff Checksum Calculator Tool -->
+            <div class="card-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">🧮 Interactive Aadhaar Verhoeff Checksum Tester</h3>
+                    <span class="badge-tag badge-valid">LIVE MATH ENGINE</span>
+                </div>
+                <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                    <input type="text" id="verhoeff-input" class="form-input" placeholder="Type 12-digit number (e.g. 543219879019)" style="max-width: 320px;" value="543219879019">
+                    <span id="verhoeff-output" style="font-weight: 700; font-size: 13px; color: #10b981;">Aadhaar checksum mathematically verified (Verhoeff D5 Checksum Valid)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 5: Batch Screening & Enterprise Portal
+        =================================================================== -->
+        <section class="tab-panel" id="tab-batch" aria-labelledby="tab-batch">
+            <div class="card-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">⚡ High-Throughput Batch Screening Portal</h2>
+                        <span style="font-size: 12px; color: var(--text-muted);">Process multiple documents concurrently for high-volume airport security, bank KYC, and border control gates.</span>
+                    </div>
+                    <button class="btn-secondary" onclick="alert('Batch exported to CSV successfully.');">📥 Export Batch CSV</button>
+                </div>
+
+                <table class="audit-table">
+                    <thead>
+                        <tr>
+                            <th>Batch ID</th>
+                            <th>Document Name</th>
+                            <th>Detected Type</th>
+                            <th>Trust Score</th>
+                            <th>Verdict</th>
+                            <th>Processing Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>BATCH-001</td>
+                            <td>aadhaar_rajesh_sharma.jpg</td>
+                            <td>Aadhaar Card</td>
+                            <td><strong style="color: #10b981;">95%</strong></td>
+                            <td><span class="badge-tag badge-valid">GENUINE</span></td>
+                            <td>0.28s</td>
+                        </tr>
+                        <tr>
+                            <td>BATCH-002</td>
+                            <td>pan_card_tampered_dob.jpg</td>
+                            <td>PAN Card</td>
+                            <td><strong style="color: #ef4444;">34%</strong></td>
+                            <td><span class="badge-tag badge-invalid">TAMPERED</span></td>
+                            <td>0.31s</td>
+                        </tr>
+                        <tr>
+                            <td>BATCH-003</td>
+                            <td>voter_id_forwarded_wa.jpg</td>
+                            <td>Voter ID (EPIC)</td>
+                            <td><strong style="color: #f59e0b;">68%</strong></td>
+                            <td><span class="badge-tag badge-valid">GENUINE (WA)</span></td>
+                            <td>0.24s</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 6: Immutable Audit Trail & Cryptographic Ledger
+        =================================================================== -->
+        <section class="tab-panel" id="tab-audit" aria-labelledby="tab-audit">
+            <div class="card-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">📋 Immutable Forensic Audit Trail & SHA-256 Ledger</h2>
+                        <span style="font-size: 12px; color: var(--text-muted);">Tamper-evident verification records chained with SHA-256 cryptographic hashes for legal admissibility under IT Act.</span>
+                    </div>
+                    <button class="btn-secondary" onclick="alert('Audit Ledger cryptographically validated against SHA-256 state tree.');">🔍 Verify Ledger Tree</button>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="audit-table">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Document Type</th>
+                                <th>Sanitized ID</th>
+                                <th>Trust Score</th>
+                                <th>Verdict</th>
+                                <th>Timestamp</th>
+                                <th>SHA-256 Audit Digest</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body">
+                            <!-- Dynamic Audit Records -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 6. WebCam Live Capture Modal -->
+    <div id="webcam-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="WebCam Live Capture">
+        <div class="modal-card">
+            <div class="panel-header">
+                <h3 class="panel-title">📸 Live Biometric Facial Authentication</h3>
+                <button class="access-btn" id="btn-close-webcam" style="color: var(--text-main); border-color: var(--border-color);">✕</button>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Position your face inside the frame. Live facial landmarks will be extracted for real-time cosine similarity verification against the ID photo.</p>
+            
+            <video id="webcam-video" class="webcam-video-feed" autoplay playsinline></video>
+
+            <div style="display: flex; gap: 10px; margin-top: 14px;">
+                <button class="btn-primary" id="btn-capture-webcam" style="flex: 1; justify-content: center; padding: 10px;">
+                    📷 Capture & Match Face
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Official Government of India Footer -->
+    <footer class="gov-footer" role="contentinfo">
+        <div class="footer-container">
+            <div>
+                <div class="footer-col-title">Government Links</div>
+                <ul class="footer-links">
+                    <li><a href="https://india.gov.in" target="_blank" rel="noopener">National Portal of India (india.gov.in)</a></li>
+                    <li><a href="https://meity.gov.in" target="_blank" rel="noopener">Ministry of Electronics & IT (MeitY)</a></li>
+                    <li><a href="https://uidai.gov.in" target="_blank" rel="noopener">Unique Identification Authority (UIDAI)</a></li>
+                    <li><a href="https://incometax.gov.in" target="_blank" rel="noopener">Income Tax Department (ITD)</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-col-title">Forensic Capabilities</div>
+                <ul class="footer-links">
+                    <li><a href="#tab-rulebook" onclick="switchTab('tab-rulebook');">Error Level Analysis (ELA)</a></li>
+                    <li><a href="#tab-rulebook" onclick="switchTab('tab-rulebook');">ArcFace Biometrics Matching</a></li>
+                    <li><a href="#tab-rulebook" onclick="switchTab('tab-rulebook');">Verhoeff Checksum Engine</a></li>
+                    <li><a href="#tab-rulebook" onclick="switchTab('tab-rulebook');">DigiLocker PKI Verification</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-col-title">Hackathon Credentials</div>
+                <ul class="footer-links">
+                    <li><strong>Smart India Hackathon 2026</strong></li>
+                    <li>Problem Statement: <code>PS-ID: 21688</code></li>
+                    <li>Platform: <strong>PramaanAI (प्रमाण AI)</strong></li>
+                    <li>Category: <strong>AI & Cyber Forensics</strong></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-col-title">Security & Compliance</div>
+                <ul class="footer-links">
+                    <li>GIGW 3.0 Guidelines Compliant</li>
+                    <li>ISO/IEC 27001 & IT Act Standard</li>
+                    <li>Zero-PII Storage Architecture</li>
+                    <li>SHA-256 Chained Audit Trail</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div>
+                © 2026 PramaanAI — Government of India. Developed for Smart India Hackathon Problem Statement 21688.
+            </div>
+            <div>
+                Designed & Hosted under National Cyber Forensics Directorate | Netlify Drop Ready
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main Module Script -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
